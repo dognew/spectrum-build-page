@@ -161,60 +161,60 @@ function animateColorSpectrum() {
 }
 
 /**
- * Enhanced animatePhotoSpectrum to neutralize piece rotation.
- * Updated to remove deprecated webkitTransform and focus on standard transform.
+ * Enhanced animatePhotoSpectrum with fade-out/fade-in transition.
  */
 function animatePhotoSpectrum() {
     const pieces = document.querySelectorAll('.puzzle-piece');
     const randomIndex = getRandomPieceIndex();
     const targetPiece = pieces[randomIndex];
-
-    // Select all available patterns injected in <defs>
     const patterns = document.querySelectorAll('#puzzle-svg defs pattern');
 
     if (targetPiece && patterns.length > 0) {
         const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
         const patternId = randomPattern.getAttribute('id');
 
-        // Extract rotation using the standard transform property
+        // Extract and neutralize rotation
         const style = window.getComputedStyle(targetPiece);
         const transform = style.transform;
         let angle = 0;
-
-        // Check if a transformation matrix exists
         if (transform && transform !== 'none') {
             const values = transform.split('(')[1].split(')')[0].split(',');
-            const a = values[0]; // cos(theta)
-            const b = values[1]; // sin(theta)
-            // Calculate angle in degrees
-            angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            angle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
         }
-
-        // Apply inverse rotation to the pattern so the image remains upright
         randomPattern.setAttribute("patternTransform", `rotate(${-angle})`);
 
-        // Store original state to restore later
+        // Prepare for transition
         const originalClasses = ['pulse-slow', 'pulse-medium', 'pulse-fast'];
         const activeOriginalClass = originalClasses.find(cls => targetPiece.classList.contains(cls));
 
-        // Remove pulse animations to avoid visual conflicts
-        originalClasses.forEach(cls => targetPiece.classList.remove(cls));
+        // STEP 1: Fade out the piece
+        targetPiece.style.transition = 'opacity 0.8s ease-in-out, fill 0.5s ease-in-out';
+        targetPiece.style.opacity = '0';
 
-        // Apply the pattern via fill attribute
-        targetPiece.style.fill = `url(#${patternId})`;
-        targetPiece.style.transition = 'fill 1.0s ease-in-out';
-
-        // Revert to original state after 6 seconds
+        // Wait for fade-out to finish before changing the fill
         setTimeout(() => {
-            targetPiece.style.fill = '';
+            // STEP 2: Remove pulse classes and Apply the image
+            originalClasses.forEach(cls => targetPiece.classList.remove(cls));
+            targetPiece.style.fill = `url(#${patternId})`;
+            
+            // STEP 3: Fade back in with the image
+            targetPiece.style.opacity = '1';
 
-            // Clean up the pattern transform for reuse
-            randomPattern.removeAttribute("patternTransform");
+            // STEP 4: After holding the image, fade out again to revert
+            setTimeout(() => {
+                targetPiece.style.opacity = '0';
 
-            if (activeOriginalClass) {
-                targetPiece.classList.add(activeOriginalClass);
-            }
-        }, 6000);
+                // STEP 5: Revert to original state after final fade out
+                setTimeout(() => {
+                    targetPiece.style.fill = '';
+                    randomPattern.removeAttribute("patternTransform");
+                    if (activeOriginalClass) {
+                        targetPiece.classList.add(activeOriginalClass);
+                    }
+                    targetPiece.style.opacity = '1'; // Bring opacity back for CSS pulses
+                }, 8000); // Time showing the image
+            }, 6000); 
+        }, 800); // Match Step 1 duration
     }
 }
 
@@ -279,7 +279,7 @@ function startPuzzleAnimation() {
                 animatePhotoSpectrum();
             }
         }
-    }, 4000);
+    }, 8000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
