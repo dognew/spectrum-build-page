@@ -15,6 +15,14 @@ A professional "Under Construction" page featuring a dynamic neurodiversity them
 * **Responsive Design:** Optimized SVG layouts for both Desktop and Mobile devices.
 * **Clean Layout:** Modern interface designed to maintain brand presence during development.
 
+## Hybrid Environment Support (Docker vs. GitHub Pages)
+
+This project is designed to be environment-aware, allowing it to run seamlessly on both full-stack servers and static hosting platforms:
+
+* **Server/Docker Environment:** The system automatically uses the PHP API (`api/spectrumbp-get-images.php`) to dynamically scan the image directory and return the file list. No manual intervention is required when adding new assets.
+* **Static Environment (GitHub Pages):** Since GitHub Pages does not support server-side PHP, the JavaScript engine detects the `github.io` hostname and switches to a static JSON fallback (`api/spectrumbp-files.json`).
+* **Manual Update Requirement:** When deploying to a static environment, any new images added to `assets/img/spectrumbp/` must be manually registered in the `api/spectrumbp-files.json` file to be recognized by the animation engine.
+
 ## JavaScript Logic & Animations
 
 The core of this project is a procedural animation engine built with Vanilla JS. It manages the SVG lifecycle and dynamic styling:

@@ -23,10 +23,23 @@ function getRandomPieceIndex() {
  * Fetches the list of spectrum images from the PHP API
  * @returns {Promise<Array>} A promise that resolves to an array of filenames
  */
+/**
+ * Fetches the list of spectrum images.
+ * Switches between PHP API (local/server) and a static JSON file (GitHub Pages).
+ * @returns {Promise<Array>} A promise that resolves to an array of filenames.
+ */
 async function fetchSpectrumFiles() {
+    // Detect if the environment is GitHub Pages
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    
+    // Choose the endpoint based on the environment
+    const endpoint = isGitHubPages 
+        ? 'api/spectrumbp-files.json' 
+        : 'api/spectrumbp-get-images.php';
+
     try {
-        const response = await fetch('api/spectrumbp-get-images.php');
-        if (!response.ok) throw new Error('Network response was not ok');
+        const response = await fetch(endpoint);
+        if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
 
         const fileList = await response.json();
         return fileList;
