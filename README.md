@@ -4,6 +4,8 @@
 
 A professional "Under Construction" page featuring a dynamic neurodiversity theme. This project utilizes a puzzle-based SVG visual with randomized animations to symbolize the page building process and the identity spectrum.
 
+👉 **[Live Demo on GitHub Pages](https://dognew.github.io/spectrum-build-page/)**
+
 ## Tech Stack
 * **HTML5**
 * **CSS3**
