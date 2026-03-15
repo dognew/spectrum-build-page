@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.main-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Camada do SVG ao fundo */
+#background-false {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#puzzle-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#container-art {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background: rgba(255, 255, 255, 1);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+}
+
+#container-art h1 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+#container-art p {
+    color: #666;
+    line-height: 1.6;
+}
+
+#logo {
+    width: 150px;
+    margin-bottom: 1rem;
+}
+
+.puzzle-piece {
+    fill: #f2f2f2;
+    opacity: 1;
+}
+
+/* Color breathing animation definition */
+@keyframes pulseColor {
+    0% { fill: #f2f2f2; }
+    50% { fill: #b3b3b3; }
+    100% { fill: #f2f2f2; }
+}
+
+@keyframes pulseSpectrumBlue {
+    0% { fill: #f2f2f2; }
+    50% { fill: #0055aa; }
+    100% { fill: #f2f2f2; }
+}
+
+@keyframes pulseSpectrumRed {
+    0% { fill: #f2f2f2; }
+    50% { fill: #e6332a; }
+    100% { fill: #f2f2f2; }
+}
+
+@keyframes pulseSpectrumYellow {
+    0% { fill: #f2f2f2; }
+    50% { fill: #ffd700; }
+    100% { fill: #f2f2f2; }
+}
+
+@keyframes pulseSpectrumCyan {
+    0% { fill: #f2f2f2; }
+    50% { fill: #00bfff; }
+    100% { fill: #f2f2f2; }
+}
+
+/* Base class for puzzle pieces ensuring smooth transitions */
+.puzzle-piece {
+    /* Synchronization with JavaScript fade-in logic */
+    transition: opacity 1.5s ease-in-out !important; 
+}
+
+/* Variations in animation duration to maintain an organic, non-synchronized flow */
+.pulse-slow {
+    animation: pulseColor 5s infinite ease-in-out !important;
+}
+
+.pulse-medium {
+    animation: pulseColor 4s infinite ease-in-out !important;
+}
+
+.pulse-fast {
+    animation: pulseColor 3s infinite ease-in-out !important;
+}
+
+.pulse-slow-blue {
+    animation: pulseSpectrumBlue 5s infinite ease-in-out !important;
+}
+
+.pulse-slow-red {
+    animation: pulseSpectrumRed 5s infinite ease-in-out !important;
+}
+
+.pulse-slow-yellow {
+    animation: pulseSpectrumYellow 5s infinite ease-in-out !important;
+}
+
+.pulse-slow-cyan {
+    animation: pulseSpectrumCyan 5s infinite ease-in-out !important;
+}
+
+.pulse-medium-blue {
+    animation: pulseSpectrumBlue 4s infinite ease-in-out !important;
+}
+
+.pulse-medium-red {
+    animation: pulseSpectrumRed 4s infinite ease-in-out !important;
+}
+
+.pulse-medium-yellow {
+    animation: pulseSpectrumYellow 4s infinite ease-in-out !important;
+}    
+
+.pulse-medium-cyan {
+    animation: pulseSpectrumCyan 4s infinite ease-in-out !important;
+}
+
+.pulse-fast-blue {
+    animation: pulseSpectrumBlue 3s infinite ease-in-out !important;
+}
+
+.pulse-fast-red {
+    animation: pulseSpectrumRed 3s infinite ease-in-out !important;
+}
+
+.pulse-fast-yellow {
+    animation: pulseSpectrumYellow 3s infinite ease-in-out !important;
+}
+
+.pulse-fast-cyan {
+    animation: pulseSpectrumCyan 3s infinite ease-in-out !important;
+}
