@@ -1,0 +1,18 @@
+name: spectrumbp
+
+services:
+  web:
+    build: .
+    image: spectrumbp-web
+    container_name: spectrumbp
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    restart: always
+    command: >
+      sh -c "echo '------------------------------------------------' &&
+             echo '🚀 SpectrumBuildPage is running!' &&
+             echo '🔗 Access your project at: http://localhost:8080' &&
+             echo '------------------------------------------------' &&
+             apache2-foreground"
